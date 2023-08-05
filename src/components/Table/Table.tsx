@@ -22,6 +22,7 @@ const Table: React.FC<IProps> = ({ tableType, tableHeaders }) => {
             {tableHeaders.map((text, i) => (
               <th key={i}>{text}</th>
             ))}
+
             {tableType === 'notesList' && (
               <th>
                 <div>
