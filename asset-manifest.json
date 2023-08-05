@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/radency_task_2/static/css/main.c3cfedb4.css",
+    "main.js": "/radency_task_2/static/js/main.ee721210.js",
+    "index.html": "/radency_task_2/index.html",
+    "main.c3cfedb4.css.map": "/radency_task_2/static/css/main.c3cfedb4.css.map",
+    "main.ee721210.js.map": "/radency_task_2/static/js/main.ee721210.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c3cfedb4.css",
+    "static/js/main.ee721210.js"
+  ]
+}
