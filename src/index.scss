@@ -1,2 +1,22 @@
 @import '~modern-normalize/modern-normalize.css';
 @import './sass/vars.scss';
+
+// BASE STYLES
+@media screen and (min-width: 320px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
+body {
+  background-color: var(--bcg-color1);
+  color: var(--font-color2);
+}
+
+button {
+  cursor: pointer;
+  &:hover {
+    background-color: var(--acc-color2);
+  }
+}
