@@ -1,0 +1,15 @@
+.button {
+  background-color: var(--acc-color1);
+  color: var(--font-color1);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 20px;
+
+  &:hover {
+    background-color: var(--acc-color2);
+    color: var(--bcg-color1);
+  }
+}
