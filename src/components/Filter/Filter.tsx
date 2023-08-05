@@ -1,6 +1,6 @@
 import styles from './filter.module.scss';
 
-export default function Filter(): JSX.Element {
+const Filter: React.FC = () => {
   return (
     <form className={styles.filter}>
       <input
@@ -27,4 +27,6 @@ export default function Filter(): JSX.Element {
       </label>
     </form>
   );
-}
+};
+
+export default Filter;

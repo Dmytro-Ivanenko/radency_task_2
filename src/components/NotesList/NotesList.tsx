@@ -1,4 +1,13 @@
-<div class="notes_listWrapper">
+import Table from '../Table/Table';
+
+const NotesList: React.FC = () => {
+  return <Table tableType="notesList" />;
+};
+
+export default NotesList;
+
+{
+  /* <div class="notes_listWrapper">
     <table class="notes_table" id="notesTable">
         <thead>
             <tr>
@@ -21,4 +30,5 @@
         </tbody>
     </table>
     <button class="addNoteButton" id="addNote">Create note</button>
-</div>
+</div>  */
+}
