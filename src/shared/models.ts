@@ -5,6 +5,7 @@ export interface INote {
   content: string;
   category: string;
   status: string;
+  editable?: boolean;
 }
 
 export type filterModel = 'active' | 'archived';

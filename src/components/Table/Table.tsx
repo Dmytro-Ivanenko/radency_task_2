@@ -1,3 +1,11 @@
+import { useEffect, useState } from 'react';
+
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { INote } from '../../shared/models';
+import { extractDatesFromText } from '../../services/workWithDate';
+
+import styles from './table.module.scss';
+
 import Button from '../../shared/components/Button/Button';
 
 interface IProps {
@@ -5,8 +13,41 @@ interface IProps {
   tableHeaders: string[];
 }
 
+// add styles
+
 // Component
 const Table: React.FC<IProps> = ({ tableType, tableHeaders }) => {
+  const [noteState, setNoteState] = useState<INote[]>([]);
+  const noteArr = useAppSelector(state => state.notesApp.notes);
+
+  useEffect(() => {
+    setNoteState(noteArr);
+  }, [noteArr]);
+
+  // Get note markup
+  const getNoteRowMarkup: (note: INote) => JSX.Element = ({
+    id,
+    name,
+    content,
+    createdAt,
+    category,
+    editable = false,
+  }) => {
+    const dates = extractDatesFromText(content);
+
+    return (
+      <tr className={editable ? styles.editable : ''} key={id}>
+        <td
+          className={`${styles.notes_category_icon} ${styles[category]}`}
+        ></td>
+        <td>
+          <input type="text" value={name} name="name" readOnly={!editable} />
+        </td>
+        <td>{createdAt}</td>
+      </tr>
+    );
+  };
+
   const onArchiveAllButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.dir(e);
   };
@@ -39,7 +80,9 @@ const Table: React.FC<IProps> = ({ tableType, tableHeaders }) => {
             )}
           </tr>
         </thead>
-        <tbody id="notesTableBody"></tbody>
+        <tbody id="notesTableBody">
+          {noteState.map(note => getNoteRowMarkup(note))}
+        </tbody>
       </table>
     </div>
   );

@@ -1,0 +1,24 @@
+.editable {
+  outline: 1px solid var(--acc-color1);
+}
+
+// Category icons
+.notes_category_icon {
+  width: 80px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50px;
+}
+
+.notes_category_icon.Task {
+  background-image: url('../../assets/icons/icon_task.svg');
+}
+
+.notes_category_icon.Idea {
+  background-image: url('../../assets/icons/icon_idea.svg');
+  background-size: 40px;
+}
+
+.notes_category_icon.Random {
+  background-image: url('../../assets/icons/icon_other.svg');
+}
