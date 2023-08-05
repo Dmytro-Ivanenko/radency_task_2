@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import styles from './button.module.scss';
 interface IProps {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const Button: React.FC<IProps> = ({ onClick, className, children }) => {
