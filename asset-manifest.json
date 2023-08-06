@@ -1,13 +1,19 @@
 {
   "files": {
-    "main.css": "/radency_task_2/static/css/main.c3cfedb4.css",
-    "main.js": "/radency_task_2/static/js/main.ee721210.js",
+    "main.css": "/radency_task_2/static/css/main.f18d3c63.css",
+    "main.js": "/radency_task_2/static/js/main.cbe7467b.js",
+    "static/media/icon_task.svg": "/radency_task_2/static/media/icon_task.7e665bdc6edd4d1d6174.svg",
+    "static/media/icon_idea.svg": "/radency_task_2/static/media/icon_idea.d4440614c1ae93236f54.svg",
+    "static/media/icon_other.svg": "/radency_task_2/static/media/icon_other.8065071065b50fc179ea.svg",
+    "static/media/icon_edit.svg": "/radency_task_2/static/media/icon_edit.9d37a9eeaf58a63e1449.svg",
     "index.html": "/radency_task_2/index.html",
-    "main.c3cfedb4.css.map": "/radency_task_2/static/css/main.c3cfedb4.css.map",
-    "main.ee721210.js.map": "/radency_task_2/static/js/main.ee721210.js.map"
+    "static/media/icon_archive.svg": "/radency_task_2/static/media/icon_archive.5168502567697a918932.svg",
+    "static/media/icon_delete.svg": "/radency_task_2/static/media/icon_delete.fe5337e2f57b1eaea3c9.svg",
+    "main.f18d3c63.css.map": "/radency_task_2/static/css/main.f18d3c63.css.map",
+    "main.cbe7467b.js.map": "/radency_task_2/static/js/main.cbe7467b.js.map"
   },
   "entrypoints": [
-    "static/css/main.c3cfedb4.css",
-    "static/js/main.ee721210.js"
+    "static/css/main.f18d3c63.css",
+    "static/js/main.cbe7467b.js"
   ]
 }
