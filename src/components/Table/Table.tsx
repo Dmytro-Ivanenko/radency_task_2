@@ -294,7 +294,7 @@ const Table: React.FC<IProps> = ({ tableType, tableHeaders }) => {
 
   return (
     <div>
-      <table className="notes_table" id="notesTable">
+      <table className={styles.notesTable} id="notesTable">
         <thead>
           <tr>
             <th></th>

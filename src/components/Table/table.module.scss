@@ -1,3 +1,51 @@
+.notesTable {
+  width: 100%;
+
+  border-spacing: 0 20px;
+  color: var(--font-color1);
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.notesTable th,
+.notesTable td {
+  padding: 10px;
+  background-color: var(--bcg-color2);
+  text-align: center;
+}
+
+.notesTable th {
+  background-color: var(--acc-color1);
+  font-weight: bold;
+}
+
+.notesTable input[type='text'],
+.notesTable select {
+  width: 100%;
+  background-color: transparent;
+  color: var(--font-color1);
+  border: none;
+  outline: none;
+  font-size: 20px;
+  text-align: center;
+
+  border-bottom: 1px solid var(--font-color2);
+}
+
+.notesTable input[readonly],
+.notesTable select:disabled {
+  text-decoration: none;
+  font-size: 18px;
+  border: none;
+}
+
+.notesTable select {
+  background: transparent;
+  width: 150px;
+  appearance: none;
+  opacity: 1;
+}
+
 .editable {
   outline: 1px solid var(--acc-color1);
 }
