@@ -1,6 +1,23 @@
+import { useState } from 'react';
+import { useAppDispatch } from '../../redux/hooks';
+import { changeFilter } from '../../redux/slice';
+
 import styles from './filter.module.scss';
 
+//Component
 const Filter: React.FC = () => {
+  const [selectedFilter, setSelectedFilter] = useState<string>('active');
+  const dispatch = useAppDispatch();
+
+  const changeFilterHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newFilter = e.target.value;
+    setSelectedFilter(newFilter);
+
+    if (newFilter === 'active' || newFilter === 'archived') {
+      dispatch(changeFilter(newFilter));
+    }
+  };
+
   return (
     <form className={styles.filter}>
       <input
@@ -9,7 +26,8 @@ const Filter: React.FC = () => {
         type="radio"
         name="notesFilter"
         value="active"
-        defaultChecked
+        checked={selectedFilter === 'active'}
+        onChange={changeFilterHandler}
       />
       <label className={styles.filter_label} htmlFor="activeNotes">
         Active
@@ -21,6 +39,8 @@ const Filter: React.FC = () => {
         type="radio"
         name="notesFilter"
         value="archived"
+        checked={selectedFilter === 'archived'}
+        onChange={changeFilterHandler}
       />
       <label className={styles.filter_label} htmlFor="archivedNotes">
         Archived
