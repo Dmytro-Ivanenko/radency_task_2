@@ -18,6 +18,22 @@ export const notesAppSlice = createSlice({
     addNote: (state, action: PayloadAction<INote>) => {
       state.notes = [...state.notes, action.payload];
     },
+
+    updateNote: (state, action: PayloadAction<INote>) => {
+      const noteId = action.payload.id;
+      console.log('action');
+
+      const updatedArr = state.notes.map((note: INote) => {
+        return note.id === noteId ? { ...action.payload } : note;
+      });
+
+      state.notes = updatedArr;
+    },
+
+    fillNotes: (state, action: PayloadAction<INote[]>) => {
+      state.notes = [...action.payload];
+    },
+
     changeFilter: (state, action: PayloadAction<filterModel>) => {
       state.filter = action.payload;
     },
@@ -25,5 +41,6 @@ export const notesAppSlice = createSlice({
 });
 
 // Part 4
-export const { addNote, changeFilter } = notesAppSlice.actions;
+export const { addNote, updateNote, fillNotes, changeFilter } =
+  notesAppSlice.actions;
 export default notesAppSlice.reducer;

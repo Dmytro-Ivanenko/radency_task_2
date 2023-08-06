@@ -28,7 +28,6 @@ const Filter: React.FC = () => {
         value="active"
         checked={selectedFilter === 'active'}
         onChange={changeFilterHandler}
-        defaultChecked
       />
       <label className={styles.filter_label} htmlFor="activeNotes">
         Active

@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { INote } from '../../shared/models';
 import { extractDatesFromText } from '../../services/workWithDate';
+import { updateNote, fillNotes } from '../../redux/slice';
 
 import Button from '../../shared/components/Button/Button';
 import styles from './table.module.scss';
@@ -28,6 +30,8 @@ interface ICategorySummary {
 // Component
 const Table: React.FC<IProps> = ({ tableType, tableHeaders }) => {
   const [noteState, setNoteState] = useState<INote[]>([]);
+  const dispatch = useAppDispatch();
+
   const filterValue = useAppSelector(state => state.notesApp.filter);
   const allNoteArr = useAppSelector(state => state.notesApp.notes);
   const filteredArr = useAppSelector(state => {
@@ -38,7 +42,7 @@ const Table: React.FC<IProps> = ({ tableType, tableHeaders }) => {
 
   useEffect(() => {
     setNoteState(filteredArr);
-  }, [filteredArr, filterValue]);
+  }, [allNoteArr, filterValue]);
 
   // Get category count
   const countNotesByCategory = (notes: INote[]): ICategorySummary[] => {
@@ -64,21 +68,129 @@ const Table: React.FC<IProps> = ({ tableType, tableHeaders }) => {
     }));
   };
 
-  // Click handlers
+  // Event handlers
+
+  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const noteId = e.target.dataset.id;
+    const newName = e.target.value;
+    console.dir(e.target);
+
+    setNoteState((state: INote[]) =>
+      state.map(note =>
+        note.id === noteId ? { ...note, name: newName } : note
+      )
+    );
+  };
+
+  const onCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const noteId = e.target.dataset.id;
+    const newCategory = e.target.value;
+
+    setNoteState((state: INote[]) =>
+      state.map(note =>
+        note.id === noteId ? { ...note, category: newCategory } : note
+      )
+    );
+  };
+
+  const onChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const noteId = e.target.dataset.id;
+    const newValue = e.target.value;
+
+    setNoteState((state: INote[]) =>
+      state.map(note =>
+        note.id === noteId ? { ...note, content: newValue } : note
+      )
+    );
+  };
+
   const onArchiveAllButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.dir(e);
+    try {
+      const updatedArr = allNoteArr.map((note: INote) => {
+        if (note.status === filterValue) {
+          const newStatus = note.status === 'active' ? 'archived' : 'active';
+          return { ...note, editable: false, status: newStatus };
+        }
+
+        return note;
+      });
+
+      dispatch(fillNotes(updatedArr));
+      Notify.success('Success');
+    } catch (error) {
+      Notify.failure('Error');
+    }
   };
+
   const onDeleteAllButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.dir(e);
+    try {
+      const updatedArr = allNoteArr.filter(
+        (note: INote) => note.status !== filterValue
+      );
+
+      dispatch(fillNotes(updatedArr));
+      Notify.success('Notes deleted');
+    } catch (error) {
+      Notify.failure('Error');
+    }
   };
-  const onAddButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.dir(e);
+
+  const onEditButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      const noteId = e.currentTarget.dataset.id;
+      const currentNote = noteState.find((note: INote) => note.id === noteId);
+
+      if (!currentNote) {
+        return;
+      }
+
+      const isEditable = currentNote?.editable === true ? false : true;
+      const newNote = { ...currentNote, editable: isEditable };
+
+      if (newNote) {
+        dispatch(updateNote(newNote));
+      }
+
+      if (!isEditable) {
+        Notify.success('Note updated');
+      }
+    } catch (error) {
+      Notify.failure('An error occurred, the item were not added..');
+    }
   };
+
   const onArchiveButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.dir(e);
+    try {
+      const noteId = e.currentTarget.dataset.id;
+      const currentNote = noteState.find((note: INote) => note.id === noteId);
+
+      if (!currentNote) {
+        return;
+      }
+
+      const newStatus =
+        currentNote?.status === 'active' ? 'archived' : 'active';
+
+      const newNote = { ...currentNote, editable: false, status: newStatus };
+
+      if (newNote) {
+        dispatch(updateNote(newNote));
+      }
+      Notify.success('Success');
+    } catch (error) {
+      Notify.failure('An error occurred..');
+    }
   };
   const onDeleteButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.dir(e);
+    try {
+      const noteId = e.currentTarget.dataset.id;
+      const updatedArr = allNoteArr.filter((note: INote) => note.id !== noteId);
+
+      dispatch(fillNotes(updatedArr));
+      Notify.success('Note deleted');
+    } catch (error) {
+      Notify.failure('An error occurred..');
+    }
   };
 
   // Get note row markup
@@ -99,11 +211,25 @@ const Table: React.FC<IProps> = ({ tableType, tableHeaders }) => {
           className={`${styles.notesCategoryIcon} ${styles[categoryForStyle]}`}
         ></td>
         <td>
-          <input type="text" value={name} name="name" readOnly={!editable} />
+          <input
+            type="text"
+            placeholder="Add name"
+            value={name}
+            name="name"
+            readOnly={!editable}
+            onChange={onChangeName}
+            data-id={id}
+          />
         </td>
         <td>{createdAt}</td>
         <td>
-          <select name="category" disabled={!editable} value={category}>
+          <select
+            name="category"
+            disabled={!editable}
+            value={category}
+            onChange={onCategoryChange}
+            data-id={id}
+          >
             <option value="Task">Task</option>
             <option value="Idea">Idea</option>
             <option value="Random Thought">Random Thought</option>
@@ -112,9 +238,12 @@ const Table: React.FC<IProps> = ({ tableType, tableHeaders }) => {
         <td>
           <input
             type="text"
+            placeholder="Add content"
             value={content}
             name="content"
+            onChange={onChangeContent}
             readOnly={!editable}
+            data-id={id}
           />
         </td>
         <td>{dates}</td>
@@ -122,7 +251,7 @@ const Table: React.FC<IProps> = ({ tableType, tableHeaders }) => {
           <div>
             <Button
               className={`${styles.notesTableButton} ${styles.notesEditButton}`}
-              onClick={onAddButtonClick}
+              onClick={onEditButtonClick}
               dataId={id}
             ></Button>
             <Button
