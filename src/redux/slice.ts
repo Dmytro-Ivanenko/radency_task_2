@@ -18,9 +18,12 @@ export const notesAppSlice = createSlice({
     addNote: (state, action: PayloadAction<INote>) => {
       state.notes = [...state.notes, action.payload];
     },
+    changeFilter: (state, action: PayloadAction<filterModel>) => {
+      state.filter = action.payload;
+    },
   },
 });
 
 // Part 4
-export const { addNote } = notesAppSlice.actions;
+export const { addNote, changeFilter } = notesAppSlice.actions;
 export default notesAppSlice.reducer;

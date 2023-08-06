@@ -3,22 +3,45 @@
 }
 
 // Category icons
-.notes_category_icon {
+.notesCategoryIcon {
   width: 80px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 50px;
 }
 
-.notes_category_icon.Task {
+.Task {
   background-image: url('../../assets/icons/icon_task.svg');
 }
 
-.notes_category_icon.Idea {
+.Idea {
   background-image: url('../../assets/icons/icon_idea.svg');
   background-size: 40px;
 }
 
-.notes_category_icon.Random {
+.Random {
   background-image: url('../../assets/icons/icon_other.svg');
 }
+
+.notesTableButton {
+  margin: 5px;
+  background-color: var(--acc-color1);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+}
+
+.notesEditButton {
+  background-image: url('../../assets/icons/icon_edit.svg');
+}
+
+.notesArchiveButton {
+  background-image: url('../../assets/icons/icon_archive.svg');
+}
+
+.notes_deleteButton {
+  background-image: url('../../assets/icons/icon_delete.svg');
+}
+
+// не виводить іконку на рандом, немає фільтру, архівації та додавань/видалень
