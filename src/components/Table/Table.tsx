@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
@@ -34,15 +34,17 @@ const Table: React.FC<IProps> = ({ tableType, tableHeaders }) => {
 
   const filterValue = useAppSelector(state => state.notesApp.filter);
   const allNoteArr = useAppSelector(state => state.notesApp.notes);
-  const filteredArr = useAppSelector(state => {
-    return state.notesApp.notes.filter(
-      (note: INote) => note.status === filterValue
-    );
-  });
+  const filteredArr = useMemo(() => {
+    return allNoteArr.filter((note: INote) => note.status === filterValue);
+  }, [allNoteArr, filterValue]);
+
+  const updateTable = useCallback(() => {
+    setNoteState(filteredArr);
+  }, [filteredArr]);
 
   useEffect(() => {
-    setNoteState(filteredArr);
-  }, [allNoteArr, filterValue]);
+    updateTable();
+  }, [allNoteArr, filterValue, updateTable]);
 
   // Get category count
   const countNotesByCategory = (notes: INote[]): ICategorySummary[] => {
@@ -73,7 +75,6 @@ const Table: React.FC<IProps> = ({ tableType, tableHeaders }) => {
   const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const noteId = e.target.dataset.id;
     const newName = e.target.value;
-    console.dir(e.target);
 
     setNoteState((state: INote[]) =>
       state.map(note =>

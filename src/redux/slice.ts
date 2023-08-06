@@ -21,8 +21,6 @@ export const notesAppSlice = createSlice({
 
     updateNote: (state, action: PayloadAction<INote>) => {
       const noteId = action.payload.id;
-      console.log('action');
-
       const updatedArr = state.notes.map((note: INote) => {
         return note.id === noteId ? { ...action.payload } : note;
       });
